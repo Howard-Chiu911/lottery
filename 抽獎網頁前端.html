@@ -56,7 +56,7 @@
         document.getElementById('drawBtn').addEventListener('click', async () => {
     console.log('抽獎按鈕被點擊了');  // 確認按鈕有被點擊
     try {
-        const response = await fetch('http://127.0.0.1:5000/draw');
+        const response = await fetch('https://lottery-3ewx.onrender.com/draw');
         const data = await response.json();
         document.getElementById('result').textContent = `恭喜中獎：${data.result}`;
         document.getElementById('timestamp').textContent = `抽獎時間：${data.timestamp}`;
