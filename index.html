@@ -1,137 +1,125 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>一番賞抽獎</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); /* 漸變背景 */
-        }
-        .container {
-            text-align: center;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-        .lottery-card {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: transform 0.3s;
-        }
-        .lottery-card:hover {
-            transform: scale(1.05);
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 32px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .result {
-            margin-top: 20px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .timestamp {
-            margin-top: 10px;
-            color: #888;
-        }
-        .lottery-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-        .lottery-card {
-            width: 300px;
-            margin: 10px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>一番賞抽獎</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #c2e9fb, #81a4fd);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 260px;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .card button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .card button:hover {
+      background-color: #45a049;
+    }
+
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #222;
+    }
+
+    .timestamp {
+      color: #666;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>一番賞抽獎活動</h1>
-        <div class="lottery-container">
-            <!-- 活動卡片 1 -->
-            <div class="lottery-card">
-                <h2>活動 1: 夏日大放送</h2>
-                <p>參加活動，贏取夏日好禮！</p>
-                <button onclick="joinLottery('event1')">立即參加</button>
-                <div class="result" id="result1"></div>
-                <div class="timestamp" id="timestamp1"></div>
-            </div>
-
-            <!-- 活動卡片 2 -->
-            <div class="lottery-card">
-                <h2>活動 2: 假期大抽獎</h2>
-                <p>獲得夢幻假期的機會！</p>
-                <button onclick="joinLottery('event2')">立即參加</button>
-                <div class="result" id="result2"></div>
-                <div class="timestamp" id="timestamp2"></div>
-            </div>
-
-            <!-- 活動卡片 3 -->
-            <div class="lottery-card">
-                <h2>活動 3: 科技產品抽獎</h2>
-                <p>贏取最新的科技產品！</p>
-                <button onclick="joinLottery('event3')">立即參加</button>
-                <div class="result" id="result3"></div>
-                <div class="timestamp" id="timestamp3"></div>
-            </div>
-        </div>
+  <div class="container">
+    <div class="card" data-event="event1">
+      <h2>活動一抽獎</h2>
+      <button class="draw-btn">抽獎</button>
+      <div class="result"></div>
+      <div class="timestamp"></div>
     </div>
 
-    <script>
-        async function joinLottery(eventId) {
-            console.log(`抽獎活動 ${eventId} 被點擊`); // 確認按鈕有被點擊
-            const resultDiv = document.getElementById('result' + eventId.slice(-1));
-            const timestampDiv = document.getElementById('timestamp' + eventId.slice(-1));
-            resultDiv.textContent = '';  // 清空之前的結果
-            timestampDiv.textContent = '';  // 清空時間戳
+    <div class="card" data-event="event2">
+      <h2>活動二抽獎</h2>
+      <button class="draw-btn">抽獎</button>
+      <div class="result"></div>
+      <div class="timestamp"></div>
+    </div>
+  </div>
 
-            try {
-                // 發送抽獎請求到後端
-                const response = await fetch('https://lottery-3ewx.onrender.com/draw', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ event: eventId })  // 傳送選擇的活動ID
-                });
+  <script>
+    const buttons = document.querySelectorAll('.draw-btn');
+    buttons.forEach(button => {
+      button.addEventListener('click', async () => {
+        const card = button.closest('.card');
+        const eventName = card.getAttribute('data-event');
+        const resultDiv = card.querySelector('.result');
+        const timestampDiv = card.querySelector('.timestamp');
 
-                if (!response.ok) {
-                    throw new Error('抽獎請求失敗');
-                }
+        resultDiv.textContent = '抽獎中...';
+        timestampDiv.textContent = '';
 
-                const data = await response.json();
-                resultDiv.textContent = `恭喜中獎：${data.result}`;
-                timestampDiv.textContent = `抽獎時間：${data.timestamp}`;
-            } catch (error) {
-                console.error('Error:', error);
-                resultDiv.textContent = '發生錯誤，請稍後再試';
-            }
+        try {
+          const response = await fetch('https://lottery-3ewx.onrender.com/draw', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ event: eventName })
+          });
+
+          if (!response.ok) {
+            throw new Error(`伺服器錯誤：${response.status}`);
+          }
+
+          const data = await response.json();
+          resultDiv.textContent = `🎉 恭喜中獎：${data.result}`;
+          timestampDiv.textContent = `🕒 抽獎時間：${data.timestamp}`;
+        } catch (error) {
+          resultDiv.textContent = '發生錯誤，請稍後再試';
+          timestampDiv.textContent = error.message;
+          console.error('錯誤資訊:', error);
         }
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
