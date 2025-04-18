@@ -12,7 +12,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); /* 漸變背景 */
         }
         .container {
             text-align: center;
@@ -20,6 +20,21 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .lottery-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .lottery-card:hover {
+            transform: scale(1.05);
         }
         button {
             background-color: #4CAF50;
@@ -29,6 +44,7 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            width: 100%;
         }
         button:hover {
             background-color: #45a049;
@@ -42,29 +58,80 @@
             margin-top: 10px;
             color: #888;
         }
+        .lottery-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .lottery-card {
+            width: 300px;
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>一番賞抽獎</h1>
-        <button id="drawBtn">抽獎</button>
-        <div class="result" id="result"></div>
-        <div class="timestamp" id="timestamp"></div>
+        <h1>一番賞抽獎活動</h1>
+        <div class="lottery-container">
+            <!-- 活動卡片 1 -->
+            <div class="lottery-card">
+                <h2>活動 1: 夏日大放送</h2>
+                <p>參加活動，贏取夏日好禮！</p>
+                <button onclick="joinLottery('event1')">立即參加</button>
+                <div class="result" id="result1"></div>
+                <div class="timestamp" id="timestamp1"></div>
+            </div>
+
+            <!-- 活動卡片 2 -->
+            <div class="lottery-card">
+                <h2>活動 2: 假期大抽獎</h2>
+                <p>獲得夢幻假期的機會！</p>
+                <button onclick="joinLottery('event2')">立即參加</button>
+                <div class="result" id="result2"></div>
+                <div class="timestamp" id="timestamp2"></div>
+            </div>
+
+            <!-- 活動卡片 3 -->
+            <div class="lottery-card">
+                <h2>活動 3: 科技產品抽獎</h2>
+                <p>贏取最新的科技產品！</p>
+                <button onclick="joinLottery('event3')">立即參加</button>
+                <div class="result" id="result3"></div>
+                <div class="timestamp" id="timestamp3"></div>
+            </div>
+        </div>
     </div>
 
     <script>
-        document.getElementById('drawBtn').addEventListener('click', async () => {
-    console.log('抽獎按鈕被點擊了');  // 確認按鈕有被點擊
-    try {
-        const response = await fetch('https://lottery-3ewx.onrender.com/draw');
-        const data = await response.json();
-        document.getElementById('result').textContent = `恭喜中獎：${data.result}`;
-        document.getElementById('timestamp').textContent = `抽獎時間：${data.timestamp}`;
-    } catch (error) {
-        console.error('Error:', error);
-    }
-});
+        async function joinLottery(eventId) {
+            console.log(`抽獎活動 ${eventId} 被點擊`); // 確認按鈕有被點擊
+            const resultDiv = document.getElementById('result' + eventId.slice(-1));
+            const timestampDiv = document.getElementById('timestamp' + eventId.slice(-1));
+            resultDiv.textContent = '';  // 清空之前的結果
+            timestampDiv.textContent = '';  // 清空時間戳
 
+            try {
+                // 發送抽獎請求到後端
+                const response = await fetch('https://lottery-3ewx.onrender.com/draw', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ event: eventId })  // 傳送選擇的活動ID
+                });
+
+                if (!response.ok) {
+                    throw new Error('抽獎請求失敗');
+                }
+
+                const data = await response.json();
+                resultDiv.textContent = `恭喜中獎：${data.result}`;
+                timestampDiv.textContent = `抽獎時間：${data.timestamp}`;
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.textContent = '發生錯誤，請稍後再試';
+            }
+        }
     </script>
 </body>
 </html>
